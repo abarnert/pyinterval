@@ -8,7 +8,7 @@ This module provides transcendental functions with interval argument.
 """
 
 try:
-    import crlibm
+    from . import crlibm
 except ImportError:
     import sys
     sys.stderr.write("Cannot load crlibm extension. The imath functions will not be available.\n")

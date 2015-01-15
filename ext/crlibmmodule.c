@@ -107,9 +107,18 @@ static PyMethodDef _crlibm_methods[] = {
   {NULL, NULL, 0, NULL}        /* Sentinel */
 };
 
+static struct PyModuleDef _crlibm_module = {
+  PyModuleDef_HEAD_INIT,
+  "crlibm",
+  _crlibm_docs,
+  -1,
+  _crlibm_methods
+};
+
 PyMODINIT_FUNC
-initcrlibm(void)
+PyInit_crlibm(void)
 {
   crlibm_init();
-  (void) Py_InitModule3("crlibm", _crlibm_methods, _crlibm_docs);
+  return PyModule_Create(&_crlibm_module);
+  //(void) Py_InitModule3("crlibm", _crlibm_methods, _crlibm_docs);
 }

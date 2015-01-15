@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 
+# Copyright (c) 2015, Andrew Barnert <abarnert@yahoo.com>
 # Copyright (c) 2008, Stefano Taschini <taschini@ieee.org>
 # All rights reserved.
 # See LICENSE for details.
@@ -28,15 +29,6 @@ except ImportError:
     from distutils.core import setup, Extension
 from distutils.command.build_py import build_py
 
-class custom_build_py(build_py):
-    def run(self):
-	from os import path as op
-        def fix(package, src_dir, build_dir, filenames):
-            assert filenames == [op.join('..', 'LICENSE')]
-            return (package, '.', build_dir, ['LICENSE'])
-        self.data_files = [fix(*t) for t in self.data_files]
-        return build_py.run(self)
-
 # A subset of http://pypi.python.org/pypi?%3Aaction=list_classifiers
 classifiers = [
     'Development Status :: 4 - Beta',
@@ -46,26 +38,27 @@ classifiers = [
     'Operating System :: POSIX :: Linux',
     'Programming Language :: C',
     'Programming Language :: Python',
+    'Programming Language :: Python :: 2',
+    'Programming Language :: Python :: 2',
     'Topic :: Scientific/Engineering :: Mathematics'
 ]
 
 metadata = dict(
     description  = 'Interval arithmetic in Python',
-    author       = 'Stefano Taschini',
-    author_email = 'taschini@gmail.com',
-    url          = "http://pyinterval.googlecode.com/",
+    author       = 'Andrew Barnert',
+    author_email = 'abarnert@yahoo.com',
+    url          = "https://github.com/abarnert/pyinterval/",
     classifiers  = classifiers
 );
 
 setup(
     name         = 'pyinterval',
-    version      = '1.0b21',
+    version      = '1.1',
+    use_2to3     = True,
     packages     = ['interval'],
-    package_data = dict(interval=['../LICENSE']),
-    cmdclass     = dict(build_py=custom_build_py),
     ext_modules  = [
         Extension(
-            'crlibm',
+            'interval.crlibm',
             sources      = ['ext/crlibmmodule.c'],
             include_dirs = ['/opt/crlibm/include'],
             library_dirs = ['/opt/crlibm/lib'],
